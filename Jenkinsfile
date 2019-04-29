@@ -17,6 +17,12 @@ dpkg-buildpackage -b -us -uc -tc'''
       }
     }
     stage('Deploy package') {
+      agent {
+        node {
+          label 'jessie-amd64'
+        }
+
+      }
       steps {
         sh '''#!/bin/bash
 /var/lib/vyos-build/pkg-build.sh $GIT_BRANCH'''
