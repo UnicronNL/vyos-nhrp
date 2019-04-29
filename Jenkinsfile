@@ -1,13 +1,14 @@
 pipeline {
-  agent none
+  agent {
+    docker {
+      image 'higebu/vyos-build:current'
+      label 'jessie-amd64'
+      dir 'docker'
+      args '--privileged --sysctl net.ipv6.conf.lo.disable_ipv6=0 -e GOSU_UID=1006 -e GOSU_GID=1006'
+    }
+  }
   stages {
     stage('build-package') {
-      agent {
-        node {
-          label 'jessie-amd64'
-        }
-
-      }
       steps {
         sh '''#!/bin/bash
 git clone --single-branch --branch $GIT_BRANCH $GIT_URL $BUILD_NUMBER
@@ -17,14 +18,9 @@ dpkg-buildpackage -b -us -uc -tc'''
       }
     }
     stage('Deploy package') {
-      agent {
-        node {
-          label 'jessie-amd64'
-        }
-
-      }
       steps {
         sh '''#!/bin/bash
+cd $BUILD_NUMBER
 /var/lib/vyos-build/pkg-build.sh $GIT_BRANCH'''
       }
     }
