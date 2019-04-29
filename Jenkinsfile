@@ -1,20 +1,15 @@
 pipeline {
-  agent {
-    docker {
-      image 'higebu/vyos-build:$GIT_BRANCH'
-      label 'jessie-amd64'
-      args '--privileged --sysctl net.ipv6.conf.lo.disable_ipv6=0'
-    }
-
-  }
+  agent none
   stages {
     stage('build-package') {
+      agent {
+        node {
+          label 'jessie-amd64'
+        }
+
+      }
       steps {
-        sh '''#!/bin/bash
-cp -r $WORKSPACE /tmp/package
-cd /tmp/package
-sudo mk-build-deps -i -r -t \'apt-get --no-install-recommends -yq\' debian/control
-dpkg-buildpackage -b -us -uc -tc'''
+        git(url: '$GIT_URL', branch: '$GIT_BRANCH', poll: true)
       }
     }
     stage('Deploy package') {
