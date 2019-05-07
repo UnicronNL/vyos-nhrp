@@ -19,6 +19,8 @@ dpkg-buildpackage -b -us -uc -tc'''
     stage('Deploy package') {
       steps {
         sh '''#!/bin/bash
+echo $HOME
+ls -al $HOME/.ssh
 cd $BUILD_NUMBER
 /usr/local/bin/pkg-build.sh $GIT_BRANCH'''
       }
