@@ -1,15 +1,14 @@
 pipeline {
-  agent none
+  agent {
+    docker {
+      image 'higebu/vyos-build:current'
+      label 'jessie-amd64'
+      args '--privileged --sysctl net.ipv6.conf.lo.disable_ipv6=0 -v /home/jenkins/.ssh:/home/vyos_bld/.ssh --add-host=dev.packages.vyos.net:10.217.48.113 '
+    }
+
+  }
   stages {
     stage('build-package') {
-      agent {
-        docker {
-          image 'higebu/vyos-build:current'
-          label 'jessie-amd64'
-          args '--privileged --sysctl net.ipv6.conf.lo.disable_ipv6=0 -v /home/jenkins/.ssh:/home/vyos_bld/.ssh --add-host=dev.packages.vyos.net:10.217.48.113 '
-        }
-
-      }
       steps {
         sh '''#!/bin/bash
 git clone --single-branch --branch $GIT_BRANCH $GIT_URL $BUILD_NUMBER
@@ -19,14 +18,6 @@ dpkg-buildpackage -b -us -uc -tc'''
       }
     }
     stage('Deploy package') {
-       agent {
-        docker {
-          image 'higebu/vyos-build:current'
-          label 'jessie-amd64'
-          args '--privileged --sysctl net.ipv6.conf.lo.disable_ipv6=0 -v /home/jenkins/.ssh:/home/vyos_bld/.ssh --add-host=dev.packages.vyos.net:10.217.48.113 '
-        }
-
-      }
       steps {
         sh '''#!/bin/bash
 echo $HOME
