@@ -27,10 +27,10 @@ dpkg-buildpackage -b -us -uc -tc'''
       }
       steps {
         sh '''#!/bin/bash
-echo $HOME
+pwd
 ls -al $HOME/.ssh
 cd $BUILD_NUMBER
-/usr/local/bin/pkg-build.sh $GIT_BRANCH'''
+/var/lib/vyos-build/pkg-build.sh $GIT_BRANCH'''
       }
     }
   }
