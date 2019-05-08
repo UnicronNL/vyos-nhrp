@@ -28,12 +28,9 @@ mv ../*.deb .'''
       }
       steps {
         sh '''#!/bin/bash
-pwd
-ls -al
 cd $BUILD_NUMBER
-pwd
-ls -al
-# /var/lib/vyos-build/pkg-build.sh $GIT_BRANCH'''
+mv *.deb ../
+/var/lib/vyos-build/pkg-build.sh $GIT_BRANCH'''
       }
     }
   }
