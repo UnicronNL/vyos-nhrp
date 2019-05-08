@@ -33,5 +33,10 @@ mv *.deb ../
 /var/lib/vyos-build/pkg-build.sh $GIT_BRANCH'''
       }
     }
+    stage('') {
+      steps {
+        cleanWs(cleanWhenAborted: true, cleanWhenFailure: true, cleanWhenNotBuilt: true, cleanWhenSuccess: true, cleanWhenUnstable: true, cleanupMatrixParent: true, deleteDirs: true, disableDeferredWipeout: true)
+      }
+    }
   }
 }
