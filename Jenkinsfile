@@ -15,7 +15,8 @@ pipeline {
 git clone --single-branch --branch $GIT_BRANCH $GIT_URL $BUILD_NUMBER
 cd $BUILD_NUMBER
 sudo mk-build-deps -i -r -t \'apt-get --no-install-recommends -yq\' debian/control
-dpkg-buildpackage -b -us -uc -tc'''
+dpkg-buildpackage -b -us -uc -tc
+mv ../*.deb .'''
       }
     }
     stage('Deploy package') {
