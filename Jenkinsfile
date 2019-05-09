@@ -25,6 +25,7 @@ mv ../*.deb .'''
           agent {
             docker {
               args '--privileged --sysctl net.ipv6.conf.lo.disable_ipv6=0'
+              label 'jessie-amd64'
               image 'vyos-build-arm:current'
             }
 
