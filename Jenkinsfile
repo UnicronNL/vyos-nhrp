@@ -4,7 +4,7 @@ pipeline {
     stage('build-package') {
       agent {
         docker {
-          image 'higebu/vyos-build:current'
+          image 'vyos-build-arm:current'
           label 'jessie-amd64'
           args '--privileged --sysctl net.ipv6.conf.lo.disable_ipv6=0'
         }
