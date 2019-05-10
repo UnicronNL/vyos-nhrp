@@ -42,17 +42,35 @@ mv ../*.deb .'''
       }
     }
     stage('Deploy package') {
-      agent {
-        node {
-          label 'jessie-amd64'
-        }
+      parallel {
+        stage('Deploy package') {
+          agent {
+            node {
+              label 'jessie-amd64'
+            }
 
-      }
-      steps {
-        sh '''#!/bin/bash
+          }
+          steps {
+            sh '''#!/bin/bash
 cd $BUILD_NUMBER
 mv *.deb ../
 /var/lib/vyos-build/pkg-build.sh $GIT_BRANCH'''
+          }
+        }
+        stage('Deploy package armhf') {
+          agent {
+            node {
+              label 'jessie-amd64'
+            }
+
+          }
+          steps {
+            sh '''#!/bin/bash
+cd $BUILD_NUMBER
+mv *.deb ../
+/var/lib/vyos-build/pkg-build.sh $GIT_BRANCH'''
+          }
+        }
       }
     }
     stage('cleanup') {
