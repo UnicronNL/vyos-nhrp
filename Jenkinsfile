@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('build-package') {
       parallel {
-        stage('build-package') {
+        stage('Build package amd64') {
           agent {
             docker {
               label 'jessie-amd64'
@@ -21,7 +21,7 @@ dpkg-buildpackage -b -us -uc -tc
 mv ../*.deb .'''
           }
         }
-        stage('build-package-arm') {
+        stage('Build package armhf') {
           agent {
             docker {
               label 'jessie-amd64'
@@ -43,7 +43,7 @@ mv ../*.deb .'''
     }
     stage('Deploy package') {
       parallel {
-        stage('Deploy package') {
+        stage('Deploy package amd64') {
           agent {
             node {
               label 'jessie-amd64'
@@ -73,15 +73,30 @@ mv *.deb ../
         }
       }
     }
-    stage('cleanup') {
-      agent {
-        node {
-          label 'jessie-amd64'
-        }
+    stage('Cleanup') {
+      parallel {
+        stage('Cleanup amd64') {
+          agent {
+            node {
+              label 'jessie-amd64'
+            }
 
-      }
-      steps {
-        cleanWs()
+          }
+          steps {
+            cleanWs()
+          }
+        }
+        stage('Cleanup armhf') {
+          agent {
+            node {
+              label 'jessie-amd64'
+            }
+
+          }
+          steps {
+            cleanWs()
+          }
+        }
       }
     }
   }
