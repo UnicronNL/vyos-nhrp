@@ -18,9 +18,7 @@ git clone --single-branch --branch $GIT_BRANCH $GIT_URL $BUILD_NUMBER
 cd $BUILD_NUMBER
 sudo mk-build-deps -i -r -t \'apt-get --no-install-recommends -yq\' debian/control
 dpkg-buildpackage -b -us -uc -tc
-mkdir -p amd64/package
-cd amd64/package
-mv ../../../*.deb .'''
+mv ../*.deb .'''
           }
         }
         stage('Build package armhf') {
@@ -38,9 +36,7 @@ git clone --single-branch --branch $GIT_BRANCH $GIT_URL $BUILD_NUMBER
 cd $BUILD_NUMBER
 sudo mk-build-deps -i -r -t \'apt-get --no-install-recommends -yq\' debian/control
 dpkg-buildpackage -b -us -uc -tc
-mkdir -p armhf/package
-cd armhf/package
-mv ../../../*.deb .'''
+mv ../*.deb .'''
           }
         }
         stage('Build package arm64') {
@@ -58,9 +54,7 @@ git clone --single-branch --branch $GIT_BRANCH $GIT_URL $BUILD_NUMBER
 cd $BUILD_NUMBER
 sudo mk-build-deps -i -r -t \'apt-get --no-install-recommends -yq\' debian/control
 dpkg-buildpackage -b -us -uc -tc
-mkdir -p arm64/package
-cd arm64/package
-mv ../../../*.deb .'''
+mv ../*.deb .'''
           }
         }
       }
@@ -77,11 +71,6 @@ mv ../../../*.deb .'''
           steps {
             sh '''#!/bin/bash
 cd $BUILD_NUMBER
-pwd
-ls -al
-cd amd64/package
-pwd
-ls -al
 mv *.deb ../
 /var/lib/vyos-build/pkg-build.sh $GIT_BRANCH'''
           }
@@ -96,11 +85,6 @@ mv *.deb ../
           steps {
             sh '''#!/bin/bash
 cd $BUILD_NUMBER
-pwd
-ls -al
-cd armhf/package
-pwd
-ls -al
 mv *.deb ../
 /var/lib/vyos-build/pkg-build.sh $GIT_BRANCH'''
           }
@@ -115,11 +99,6 @@ mv *.deb ../
           steps {
             sh '''#!/bin/bash
 cd $BUILD_NUMBER
-pwd
-ls -al
-cd arm64/package
-pwd
-ls -al
 mv *.deb ../
 /var/lib/vyos-build/pkg-build.sh $GIT_BRANCH'''
           }
