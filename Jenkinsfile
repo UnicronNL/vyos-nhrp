@@ -88,7 +88,7 @@ cd /tmp/$GIT_BRANCH/packages/script
 
           }
           steps {
-            cleanWs()
+            cleanWs(cleanWhenAborted: true, cleanWhenFailure: true, cleanWhenNotBuilt: true, cleanWhenSuccess: true, cleanWhenUnstable: true, cleanupMatrixParent: true, deleteDirs: true, disableDeferredWipeout: true)
           }
         }
         stage('Cleanup armhf') {
@@ -99,7 +99,7 @@ cd /tmp/$GIT_BRANCH/packages/script
 
           }
           steps {
-            cleanWs()
+            cleanWs(cleanWhenAborted: true, cleanWhenFailure: true, cleanWhenNotBuilt: true, cleanWhenSuccess: true, cleanWhenUnstable: true, cleanupMatrixParent: true, deleteDirs: true, disableDeferredWipeout: true)
           }
         }
         stage('Cleanup arm64') {
@@ -110,7 +110,7 @@ cd /tmp/$GIT_BRANCH/packages/script
 
           }
           steps {
-            cleanWs()
+            cleanWs(cleanWhenAborted: true, cleanWhenFailure: true, cleanWhenNotBuilt: true, cleanWhenSuccess: true, cleanWhenUnstable: true, cleanupMatrixParent: true, deleteDirs: true, disableDeferredWipeout: true)
           }
         }
       }
