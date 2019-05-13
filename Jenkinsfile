@@ -77,7 +77,11 @@ mv ../../../*.deb .'''
           steps {
             sh '''#!/bin/bash
 cd $BUILD_NUMBER
+pwd
+ls -al
 cd amd64/package
+pwd
+ls -al
 mv *.deb ../
 /var/lib/vyos-build/pkg-build.sh $GIT_BRANCH'''
           }
@@ -92,7 +96,11 @@ mv *.deb ../
           steps {
             sh '''#!/bin/bash
 cd $BUILD_NUMBER
+pwd
+ls -al
 cd armhf/package
+pwd
+ls -al
 mv *.deb ../
 /var/lib/vyos-build/pkg-build.sh $GIT_BRANCH'''
           }
@@ -107,7 +115,11 @@ mv *.deb ../
           steps {
             sh '''#!/bin/bash
 cd $BUILD_NUMBER
+pwd
+ls -al
 cd arm64/package
+pwd
+ls -al
 mv *.deb ../
 /var/lib/vyos-build/pkg-build.sh $GIT_BRANCH'''
           }
