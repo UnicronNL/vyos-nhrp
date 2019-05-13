@@ -20,6 +20,7 @@ sudo mk-build-deps -i -r -t \'apt-get --no-install-recommends -yq\' debian/contr
 dpkg-buildpackage -b -us -uc -tc
 mkdir -p amd64/package
 cd amd64/package
+pwd
 mv ../../../*.deb .'''
           }
         }
@@ -76,7 +77,11 @@ mv ../../../*.deb .'''
           }
           steps {
             sh '''#!/bin/bash
-cd $BUILD_NUMBER/amd64/package
+pwd
+cd $BUILD_NUMBER
+pwd
+ls -al
+cd amd64/package
 mv *.deb ../
 /var/lib/vyos-build/pkg-build.sh $GIT_BRANCH'''
           }
