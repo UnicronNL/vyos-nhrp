@@ -65,49 +65,17 @@ mv ../*.deb /tmp/$GIT_BRANCH/packages/'''
         }
       }
     }
-    stage('Deploy package') {
-      parallel {
-        stage('Deploy package amd64') {
-          agent {
-            node {
-              label 'jessie-amd64'
-            }
+    stage('Deploy packages') {
+      agent {
+        node {
+          label 'jessie-amd64'
+        }
 
-          }
-          steps {
-            sh '''#!/bin/bash
+      }
+      steps {
+        sh '''#!/bin/bash
 cd /tmp/$GIT_BRANCH/packages/script
 /var/lib/vyos-build/pkg-build.sh $GIT_BRANCH'''
-          }
-        }
-        stage('Deploy package armhf') {
-          agent {
-            node {
-              label 'jessie-amd64'
-            }
-
-          }
-          steps {
-            sh '''#!/bin/bash
-cd $BUILD_NUMBER
-mv *.deb ../
-/var/lib/vyos-build/pkg-build.sh $GIT_BRANCH'''
-          }
-        }
-        stage('Deploy package arm64') {
-          agent {
-            node {
-              label 'jessie-amd64'
-            }
-
-          }
-          steps {
-            sh '''#!/bin/bash
-cd $BUILD_NUMBER
-mv *.deb ../
-/var/lib/vyos-build/pkg-build.sh $GIT_BRANCH'''
-          }
-        }
       }
     }
     stage('Cleanup') {
