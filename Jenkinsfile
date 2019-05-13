@@ -79,40 +79,14 @@ cd /tmp/$GIT_BRANCH/packages/script
       }
     }
     stage('Cleanup') {
-      parallel {
-        stage('Cleanup amd64') {
-          agent {
-            node {
-              label 'jessie-amd64'
-            }
-
-          }
-          steps {
-            cleanWs()
-          }
+      agent {
+        node {
+          label 'jessie-amd64'
         }
-        stage('Cleanup armhf') {
-          agent {
-            node {
-              label 'jessie-amd64'
-            }
 
-          }
-          steps {
-            cleanWs()
-          }
-        }
-        stage('Cleanup arm64') {
-          agent {
-            node {
-              label 'jessie-amd64'
-            }
-
-          }
-          steps {
-            cleanWs()
-          }
-        }
+      }
+      steps {
+        cleanWs()
       }
     }
   }
