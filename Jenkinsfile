@@ -41,6 +41,7 @@ sudo mk-build-deps -i -r -t \'apt-get --no-install-recommends -yq\' debian/contr
 dpkg-buildpackage -b -us -uc -tc
 mkdir -p armhf/package
 cd armhf/package
+pwd
 mv ../../../*.deb .'''
           }
         }
@@ -61,6 +62,7 @@ sudo mk-build-deps -i -r -t \'apt-get --no-install-recommends -yq\' debian/contr
 dpkg-buildpackage -b -us -uc -tc
 mkdir -p arm64/package
 cd arm64/package
+pwd
 mv ../../../*.deb .'''
           }
         }
@@ -95,7 +97,10 @@ mv *.deb ../
           }
           steps {
             sh '''#!/bin/bash
-cd $BUILD_NUMBER/armhf/package
+cd $BUILD_NUMBER
+cd armhf/package
+pwd
+ls -al
 mv *.deb ../
 /var/lib/vyos-build/pkg-build.sh $GIT_BRANCH'''
           }
@@ -109,7 +114,10 @@ mv *.deb ../
           }
           steps {
             sh '''#!/bin/bash
-cd $BUILD_NUMBER/arm64/package
+cd $BUILD_NUMBER
+cd arm64/package
+pwd
+ls -al
 mv *.deb ../
 /var/lib/vyos-build/pkg-build.sh $GIT_BRANCH'''
           }
